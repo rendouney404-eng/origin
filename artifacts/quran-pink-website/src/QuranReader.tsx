@@ -38,6 +38,7 @@ type ApiEnvelope<T> = { code: number; status: string; data: T };
 type SurahData = Surah & { ayahs: Ayah[] };
 
 const API_ROOT = 'https://api.alquran.cloud/v1';
+const ALLOWED_SURAH_NUMBERS = [1, 10, 11, 12, 13, 14, 15, 16, 17];
 
 async function getJson<T>(url: string, signal?: AbortSignal): Promise<T> {
   const response = await fetch(url, { signal });
@@ -102,7 +103,7 @@ function SurahList({
             <h2 className="mt-1 font-[var(--app-font-serif)] text-2xl font-semibold">سور القرآن</h2>
           </div>
           <div className="rounded-full bg-secondary px-3 py-1 text-xs font-semibold text-secondary-foreground">
-            ١١٤ سورة
+            {ALLOWED_SURAH_NUMBERS.length} سور
           </div>
         </div>
         <label className="relative block">
@@ -314,6 +315,7 @@ export function QuranReader() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
   const currentSurah = surahs.find((surah) => surah.number === selectedNumber);
+  const currentSurahIndex = surahs.findIndex((surah) => surah.number === selectedNumber);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', theme === 'dark');
@@ -324,7 +326,7 @@ export function QuranReader() {
     setSurahsLoading(true);
     setSurahsError(null);
     getJson<Surah[]>(`${API_ROOT}/surah`)
-      .then(setSurahs)
+      .then((data) => setSurahs(data.filter((surah) => ALLOWED_SURAH_NUMBERS.includes(surah.number))))
       .catch((error: Error) => setSurahsError(error.message || 'حدث خطأ غير متوقع'))
       .finally(() => setSurahsLoading(false));
   };
@@ -463,8 +465,8 @@ export function QuranReader() {
                   data-testid="button-previous-surah"
                   type="button"
                   aria-label="السورة السابقة"
-                  disabled={selectedNumber <= 1}
-                  onClick={() => selectSurah(Math.max(1, selectedNumber - 1))}
+                  disabled={currentSurahIndex <= 0}
+                  onClick={() => selectSurah(surahs[currentSurahIndex - 1]?.number ?? selectedNumber)}
                   className="rounded-full p-2 text-muted-foreground transition hover:bg-secondary hover:text-foreground disabled:opacity-30"
                 >
                   <ChevronRight className="size-4" />
@@ -474,8 +476,8 @@ export function QuranReader() {
                   data-testid="button-next-surah"
                   type="button"
                   aria-label="السورة التالية"
-                  disabled={selectedNumber >= 114}
-                  onClick={() => selectSurah(Math.min(114, selectedNumber + 1))}
+                  disabled={currentSurahIndex < 0 || currentSurahIndex >= surahs.length - 1}
+                  onClick={() => selectSurah(surahs[currentSurahIndex + 1]?.number ?? selectedNumber)}
                   className="rounded-full p-2 text-muted-foreground transition hover:bg-secondary hover:text-foreground disabled:opacity-30"
                 >
                   <ChevronLeft className="size-4" />
