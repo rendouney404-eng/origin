@@ -534,9 +534,12 @@ export function QuranReader() {
               </div>
             )}
 
-            <footer className="mt-10 flex flex-wrap items-center justify-between gap-3 px-1 text-xs text-muted-foreground">
-              <span className="flex items-center gap-2"><BookOpen className="size-3.5 text-primary" /> بيانات القرآن من Quran Cloud</span>
-              <span>اللهم اجعل القرآن ربيع قلوبنا</span>
+            <footer className="mt-10 flex flex-wrap items-center justify-between gap-x-5 gap-y-3 border-t border-border/60 px-1 pt-5 text-xs leading-6 text-muted-foreground">
+              <span className="flex items-center gap-2"><BookOpen className="size-3.5 text-primary" /> الآيات والتفسير والتلاوة عبر Quran Cloud</span>
+              <span className="font-semibold text-foreground/75">إعداد وتطوير: وِرد</span>
+              <span className="w-full text-[11px] text-muted-foreground/85">
+                فريق العمل: هند النجدي، تاليا الزهراني، نرمين القارحي، غلا الجحدلي، حلا الثقفي، جود الزهراني، ماريه القرني، بشرى محمد
+              </span>
             </footer>
           </div>
         </main>
