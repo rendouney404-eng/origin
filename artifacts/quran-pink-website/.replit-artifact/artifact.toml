@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "Quran Pink Website"
+description = "A pink Arabic Quran website where readers can browse all surahs, search by name, read the Quran, expand the Muyassar tafsir, play verse recitations, and switch between light and dark modes."
+version = "1.0.0"
+id = "artifacts/quran-pink-website"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 20795
+
+[services.development]
+run = "pnpm --filter @workspace/quran-pink-website run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/quran-pink-website", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/quran-pink-website/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "20795"
+BASE_PATH = "/"
