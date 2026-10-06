@@ -540,7 +540,7 @@ export function QuranReader() {
               <span className="flex items-center gap-2"><BookOpen className="size-3.5 text-primary" /> الآيات والتفسير والتلاوة عبر Quran Cloud</span>
               <span className="font-semibold text-foreground/75">إعداد وتطوير: وِرد</span>
               <span className="w-full text-[11px] text-muted-foreground/85">
-                فريق العمل: هند النجدي، تاليا الزهراني، نرمين القارحي، غلا الجحدلي، حلا الثقفي، جود الزهراني، ماريه القرني، بشرى محمد
+                فريق العمل: هند النجدي، تاليا الزهراني، نارمين الهذلي، غلا الجحدلي، حلا الثقفي، جود الزهراني، مارية القرني، بشرى محمد
               </span>
             </footer>
           </div>
